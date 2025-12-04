@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_MEASUREMENT_ID"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'YOUR_MEASUREMENT_ID');
+</script>
+<head>
+  <!-- Firebase App (required) -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+
+<!-- Firebase Analytics -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+
+
+  <meta charset="UTF-8" />
+  <title>Priya's Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,700,800&display=swap" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Poppins", sans-serif;
+      background: #14233c;
+      color: #f2f2f2;
+    }
+    header {
+      width: 100%;
+      padding: 32px 60px 0 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: #14233c;
+      z-index: 9999;
+    }
+    .logo {
+      font-size: 2em;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #f2f2f2;
+    }
+    nav {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+      position: relative;
+      padding-right: 50px;
+    }
+    nav > ul {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      align-items: center;
+    }
+    nav > ul > li {
+      position: relative;
+    }
+    nav > ul > li > a {
+      color: #f2f2f2;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.07em;
+      transition: color 0.3s;
+      padding: 6px 6px;
+      display: inline-block;
+    }
+    nav > ul > li > a.active,
+    nav > ul > li > a:hover {
+      color: #28a1fd;
+    }
+    .submenu {
+      position: absolute;
+      top: 120%;
+      left: 0;
+      background: #192947;
+      box-shadow: 0 4px 24px #0003;
+      border-radius: 10px;
+      min-width: 220px;
+      z-index: 22;
+      display: none;
+      list-style: none;  /* remove bullet points */
+      padding: 0;
+      margin: 0;
+    }
+    .submenu li {
+      width: 100%;
+    }
+    .submenu li a {
+      display: block;
+      padding: 12px 27px;
+      color: #f2f2f2;
+      font-size: 0.97em;
+      text-decoration: none;
+      border-bottom: 1px solid #22325440;
+      transition: background 0.3s, color 0.3s;
+      border-radius: 8px;
+    }
+    .submenu li:last-child a {
+      border-bottom: none;
+    }
+    .submenu li a:hover {
+      background: #28a1fd22;
+      color: #28a1fd;
+    }
+    nav > ul > li:hover .submenu {
+      display: block;
+    }
+    .download-cv {
+      margin-left: 32px;
+      margin-right: 32px;
+      background: #28a1fd;
+      color: #fff;
+      border-radius: 8px;
+      border: none;
+      padding: 9px 32px;
+      font-weight: 700;
+      font-size: 1em;
+      letter-spacing: 0.5px;
+      box-shadow: 0 0 12px #28a1fd24;
+      text-decoration: none;
+      transition: background 0.3s, box-shadow 0.3s;
+      display: inline-block;
+      cursor: pointer;
+    }
+    .download-cv:hover {
+      background: #145882;
+      box-shadow: 0 2px 20px #14588240;
+      color: #fff;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      min-height: calc(100vh - 120px);
+      padding: 40px 60px 60px 60px;
+      gap: 40px;
+      padding-top: 120px; /* offset for fixed header */
+      box-sizing: border-box;
+    }
+    .main-content {
+      max-width: 600px;
+      flex: 1 1 100%;
+    }
+    .main-content h1 {
+      font-size: 3em;
+      font-weight: 800;
+      margin: 0 0 16px 0;
+      color: #fff;
+    }
+    .typed-wrapper {
+      min-height: 2.4em;
+      margin-bottom: 22px;
+      font-size: 1.4em;
+      font-weight: 700;
+      color: #28a1fd;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+    }
+    .typed-text {
+      border-right: 3px solid #28a1fd;
+      padding-right: 6px;
+      overflow: hidden;
+      animation: blink-caret 0.8s steps(1) infinite;
+    }
+    @keyframes blink-caret {
+      0%, 100% {
+        border-color: #28a1fd;
+      }
+      50% {
+        border-color: transparent;
+      }
+    }
+    .main-content p {
+      font-size: 1em;
+      color: #b3b3b3;
+      line-height: 1.7em;
+      margin-bottom: 34px;
+    }
+    .buttons {
+      display: flex;
+      gap: 18px;
+      margin-bottom: 44px;
+    }
+    .buttons a {
+      padding: 12px 38px;
+      border-radius: 10px;
+      background: #28a1fd;
+      color: #fff;
+      font-weight: 600;
+      text-decoration: none;
+      border: none;
+      font-size: 1.1em;
+      box-shadow: 0 0 12px #28a1fd28;
+      transition: background 0.3s, color 0.3s;
+    }
+    .buttons a:last-child {
+      background: transparent;
+      color: #28a1fd;
+      border: 2px solid #28a1fd;
+    }
+    .buttons a:hover {
+      background: #145882;
+      color: #fff;
+      border-color: #145882;
+    }
+    .social {
+      margin-top: 12px;
+    }
+    .social a {
+      display: inline-block;
+      width: 36px;
+      height: 36px;
+      margin-right: 15px;
+      background: transparent;
+      border: 2px solid #28a1fd;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 36px;
+      color: #28a1fd;
+      font-size: 1.2em;
+      transition: background 0.3s, color 0.3s;
+    }
+    .social a:hover {
+      background: #28a1fd;
+      color: #14233c;
+    }
+    .profile-img {
+      width: 340px;
+      height: 420px;
+      border-radius: 20px;
+      background: radial-gradient(circle at 60% 60%, #252b41 60%, #14233c 100%);
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 44px #12253c90;
+      flex-shrink: 0;
+    }
+    .profile-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+      box-shadow: 0 0 60px #14233c;
+      transition: opacity 0.4s;
+      opacity: 0.99;
+      border: none;
+    }
+    .profile-img:hover img {
+      opacity: 0.65;
+    }
+
+
+    /* Timeline container */
+    .timeline-container {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 50px;
+    }
+    .timeline-box {
+      background: #192947;
+      padding: 24px 28px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #0008 inset;
+      flex: 1 1 320px;
+      max-width: 440px;
+      min-width: 320px;
+      box-sizing: border-box;
+    }
+    .timeline-box h3 {
+      border-bottom: 2px solid #28a1fd;
+      padding-bottom: 6px;
+      margin-bottom: 18px;
+      font-weight: 700;
+      color: #28a1fd;
+      font-size: 1.4em;
+    }
+    .timeline-item {
+      margin-bottom: 30px;
+    }
+    .timeline-item h4 {
+      font-size: 1.15em;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .timeline-item p {
+      margin: 4px 0;
+      font-size: 0.95em;
+      color: #ccc;
+      line-height: 1.4em;
+    }
+    .timeline-item .date {
+      font-size: 0.85em;
+      color: #7d7d7d;
+    }
+    .experience-certificate {
+      display: flex;
+      justify-content: center;
+      margin-top: 12px;
+    }
+    .contact-wrapper {
+      display: flex;
+      justify-content: center; /* center horizontally */
+      align-items: center;     /* center vertically */
+      height: 100vh;           /* full viewport height */
+      background: #14233c;     /* optional: page background */
+      box-sizing: border-box;
+      padding: 20px;           /* optional spacing */
+    }
+
+
+    .contact-section {
+      max-width: 1000px;
+      padding: 30px 24px;
+      background: #192947;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #0008 inset;
+      text-align: center;
+      color: #f2f2f2;
+      margin: 0;
+    }
+
+
+
+    .cert-button {
+      background: #28a1fd;
+      color: white;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      outline: none;
+      transition: background-color 0.3s;
+      text-align: center;
+    }
+    .cert-button:hover {
+      background: #145882;
+    }
+
+
+    /* Projects section */
+    .projects-section {
+      margin-top: 50px;
+      flex: 1 1 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px;
+    }
+    .project-card {
+      background: #192947;
+      border-radius: 14px;
+      padding: 20px 28px 24px 28px;
+      max-width: 360px;
+      box-shadow: 0 0 20px #0008 inset;
+      display: flex;
+      flex-direction: column;
+    }
+    .project-title {
+      color: #28a1fd;
+      font-weight: 700;
+      font-size: 1.25em;
+      margin-bottom: 10px;
+    }
+    .project-duration {
+      color: #7d7d7d;
+      font-size: 0.85em;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .project-languages {
+      margin-bottom: 12px;
+      display: flex;
+      gap: 10px;
+      font-size: 1.1em;
+      color: #28a1fd;
+    }
+    .project-description {
+      font-size: 0.9em;
+      color: #ccc;
+      white-space: pre-line;
+      flex-grow: 1;
+    }
+
+
+
+    /* Technical skills */
+
+
+.webtech-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 38px 0 18px 0;
+  font-family: 'Poppins', 'Nunito', sans-serif; /* Match language section font */
+}
+
+
+.webtech-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+  font-size: 0.99em;
+  font-weight: 10;         /* Normal weight, no bold */
+  color: #ccc;             /* Same as language header color */
+}
+
+
+
+.webtech-title i {
+  font-size: 1.28em;
+  color: #28a1fd;             /* accent blue icon */
+  margin-right: 6px;
+}
+
+
+.webtech-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;          /* more space between boxes as in the image */
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: center;
+}
+
+
+.webtech-box {
+  background: #223254;
+  border-radius: 12px;
+  padding: 7px 20px;
+  font-size: 0.95em;
+  font-weight: 600;
+  color: #ccc;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+  text-align: center;
+  font-family: inherit;
+  box-shadow: none;
+  letter-spacing: 0.01em;
+  transition: background 0.2s;
+}
+
+
+
+
+
+    .skills-section {
+      margin-top: 50px;
+      background: #192947;
+      border-radius: 14px;
+      padding: 30px 28px 30px 28px;
+      max-width: 100%;
+      box-shadow: 0 0 20px #0008 inset;
+      color: #f2f2f2;
+      flex: 1 1 100%;
+    }
+    .skills-section h3 {
+      border-bottom: 2px solid #28a1fd;
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+      font-weight: 700;
+      color: #28a1fd;
+      font-size: 1.4em;
+    }
+    .skills-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      font-size: 1em;
+      color: #ccc;
+      margin-bottom: 18px;
+    }
+    .skills-row i {
+      color: #28a1fd;
+      margin-right: 6px;
+    }
+    .skills-row span {
+      min-width: 130px;
+      font-weight: 600;
+    }
+
+
+
+    /* Certifications & Involvements */
+    .certifications-section,
+    .involvements-section {
+      margin-top: 50px;
+      background: #192947;
+      border-radius: 14px;
+      padding: 30px 28px 30px 28px;
+      max-width: 100%;
+      box-shadow: 0 0 20px #0008 inset;
+      color: #f2f2f2;
+      flex: 1 1 100%;
+    }
+    .certifications-section h3,
+    .involvements-section h3 {
+      border-bottom: 2px solid #28a1fd;
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+      font-weight: 700;
+      color: #28a1fd;
+      font-size: 1.4em;
+    }
+    .certificates-list,
+    .involvements-list {
+      font-size: 1em;
+      color: #ccc;
+      line-height: 1.6em;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .involvements-list li {
+      margin-bottom: 8px;
+    }
+
+
+
+    /* Language icons placeholders */
+    .icon-java::before { content: "\f4e4"; font-family: "Font Awesome 5 Brands"; }
+    .icon-python::before { content: "\f43e"; font-family: "Font Awesome 5 Brands"; }
+    .icon-matlab::before { content: "\f456"; font-family: "Font Awesome 5 Brands"; }
+    .icon-javascript::before { content: "\f3b8"; font-family: "Font Awesome 5 Brands"; }
+    .icon-html5::before { content: "\f13b"; font-family: "Font Awesome 5 Brands"; }
+    .icon-css3::before { content: "\f13c"; font-family: "Font Awesome 5 Brands"; }
+    .icon-r::before { content: "\f477"; font-family: "Font Awesome 5 Brands"; }
+
+
+
+    /* For customizing icons for categories */
+    .skills-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-right: 10px;
+    }
+    .skills-title i {
+      font-size: 1.3em;
+      color: #28a1fd;
+      margin-right: 6px;
+    }
+    .skills-category {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .skills-category span {
+      background: #223254;
+      border-radius: 12px;
+      padding: 4px 10px;
+      font-size: 0.95em;
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+
+
+    /* Center and fix width for About Me tab */
+    .about-me-content {
+      margin: 0 auto;
+      max-width: 1000px;
+      width: 90vw;
+      padding-left: 20px;
+      padding-right: 20px;
+      box-sizing: border-box;
+    }
+
+
+
+    @media (max-width: 950px) {
+      header,
+      .container {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+      .profile-img {
+        width: 220px;
+        height: 260px;
+      }
+      .main-content h1 {
+        font-size: 2em;
+      }
+      .main-content .typed-wrapper {
+        font-size: 1em;
+        min-height: 2em;
+      }
+      .submenu {
+        min-width: 160px;
+      }
+      .timeline-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      .timeline-box {
+        max-width: 90vw;
+        min-width: 90vw;
+      }
+    }
+    @media (max-width: 700px) {
+      .container {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-top: 65px;
+        padding-bottom: 20px;
+      }
+      .profile-img {
+        margin-top: 35px;
+      }
+      nav > ul {
+        gap: 10px;
+        font-size: 0.8em;
+      }
+      .download-cv {
+        padding: 7px 18px;
+      }
+      .submenu {
+        min-width: 120px;
+      }
+      header {
+        padding-left: 12px;
+        padding-right: 12px;
+        padding-top: 18px;
+      }
+      .timeline-box {
+        min-width: 100%;
+        max-width: 100%;
+      }
+      .timeline-container {
+        position: relative;
+        padding-left: 40px;
+      }
+      .timeline-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 20px;
+        width: 4px;
+        height: 100%;
+        background: #28a1fd;
+        border-radius: 2px;
+        opacity: 0.3;
+      }
+      .timeline-box {
+        position: relative;
+        padding-left: 60px;
+      }
+      .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: 8px;
+        top: 20px;
+        width: 16px;
+        height: 16px;
+        background: #28a1fd;
+        border-radius: 50%;
+        border: 3px solid #192947;
+        box-shadow: 0 0 8px #28a1fd88;
+      }
+    }
+
+
+    /* Contact Details Section */
+    .contact-section ul {
+      list-style: none;
+      padding: 0;
+      font-size: 1.1em;
+    }
+    .contact-section ul li {
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+    }
+    .contact-section ul li i {
+      color: #28a1fd;
+      margin-right: 10px;
+      min-width: 20px;
+      text-align: center;
+    }
+    .contact-section ul li a {
+      color: #28a1fd;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">Priya's Portfolio</div>
+    <nav>
+      <ul>
+        <li><a class="active" href="#home">Home</a></li>
+        <li>
+          <a href="#">About Me</a>
+          <ul class="submenu">
+            <li><a href="#my-journey">My Journey</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#technical-skills">Technical Skills</a></li>
+            <li><a href="#certifications">Certifications</a></li>
+            <li><a href="#involvements">Involvements / Achievements</a></li>
+          </ul>
+        </li>
+        <li><a href="#contact-me">Contact Me</a></li>
+      </ul>
+      <a class="download-cv" href="https://drive.google.com/file/d/1ErY4KABrIrHJN1YYytcj9A6PXJNKkG7C/view?usp=drive_link" download>Download Priya's Resume</a>
+    </nav>
+  </header>
+  <div class="container" id="home">
+    <div class="main-content">
+      <h1>Hi, I'm Priya Dharshini</h1>
+      <div class="typed-wrapper">
+        I'm a&nbsp;<span class="typed-text" id="typed"></span>
+      </div>
+      <p>
+Hi, I’m Priyadharshini C, a curious and motivated Computer Science undergraduate at Madras Institute of Technology, Anna University. I’m passionate about building impactful software solutions with strong foundations in Java, Python, Web Development, and Data Analysis.
+<br><br>
+I’ve gained hands-on experience through internships at Ernst & Young and the Next Generation Networks Lab, where I worked on treasury data insights, quantum cryptography, and secure communication. My projects range from creating GenAI-powered context-aware image generation tools to developing a full-stack e-learning management system and UAV stabilization models.
+<br><br>
+Beyond academics, I enjoy designing, collaborating, and solving real-world challenges with creativity and innovation. I’m always eager to explore new technologies, contribute to meaningful projects, and grow as a professional in the field of software engineering.      </p>
+      <div class="social">
+<a href="https://github.com/Priyadharshini004-mit?tab=repositories" target="_blank" rel="noopener noreferrer">
+  <i class="fab fa-github"></i>
+</a>
+
+        <a href="https://www.linkedin.com/in/priya-dharshini-c-182a402b4/"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+
+
+      <!-- About Me Content Wrapper -->
+      <div class="about-me-content">
+        <!-- My Journey Timeline -->
+        <h2 id="my-journey" style="color:#28a1fd; margin-bottom: 20px; margin-top: 50px;">
+          My Journey
+        </h2>
+        <div class="timeline-container">
+          <!-- Education Timeline Box -->
+          <div class="timeline-box">
+            <h3>Education</h3>
+            <div class="timeline-item">
+              <h4>MADRAS INSTITUTE OF TECHNOLOGY, ANNA UNIVERSITY</h4>
+              <p class="date">Oct 2022 - Present | Chennai, Tamilnadu</p>
+              <p>B.E Computer Science & Engineering - CGPA: 7.58 (till Sem 6)</p>
+            </div>
+            <div class="timeline-item">
+              <h4>CSI JESSIE MOSES MATRICULATION HR SEC SCHOOL</h4>
+              <p class="date">Jun 2021 - May 2022 | Chennai, Tamilnadu</p>
+              <p>HSC - PERCENTAGE: 81.16%</p>
+            </div>
+            <div class="timeline-item">
+              <h4>CSI BAIN MATRICULATION HR SEC SCHOOL</h4>
+              <p class="date">Jun 2019 - May 2020 | Chennai, Tamilnadu</p>             
+              <p>SSLC - PERCENTAGE: 73.5%</p>
+            </div>
+            <div class="timeline-item">
+              <h4>Balavidylaya</h4>
+              <p class="date">2005 - 2009</p>
+              <p>Chennai, Tamilnadu</p>
+            </div>
+          </div>
+
+
+          <!-- Experience Timeline Box -->
+          <div class="timeline-box">
+            <h3>Experience</h3>
+            <div class="timeline-item">
+              <h4>ERNST & YOUNG | LINK Summer Intern | Remote</h4>
+              <p class="date">Gurugram, Haryana | June 2025 - July 2025</p>
+              <p>● Analyzed large-scale treasury survey data using Excel for strategic insights.</p>
+              <p>● Co-authored and presented a comprehensive treasury trends report.</p>
+              <p>● Highlighted key points and future priorities of respondents.</p>
+              <div class="experience-certificate">
+<button onclick="window.open('https://drive.google.com/file/d/1qbQpyREvTOZI2klNN2xoaWQzz64bxMq0/view?usp=drive_link', '_blank')" class="cert-button">
+  View Certificate
+</button>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <h4>NEXT GENERATION NETWORKS LAB Student Researcher Intern</h4>
+              <p class="date">Madras Institute of Technology, Chennai, Tamilnadu | Nov 2024 - Jan 2025</p>
+              <p>● Researched concepts of Quantum Key Distribution (QKD) and quantum cryptography.</p>
+              <p>● Explored BB84 protocol and future-secure communication.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Projects Section -->
+        <h2 id="projects" style="color:#28a1fd; margin-top: 50px; margin-bottom: 20px; text-align: center;">
+          Projects
+        </h2>
+        <div class="projects-section">
+          <div class="project-card">
+            <div class="project-title">AUGMENTED TEXT ANALYSIS TO CONTEXT-AWARE IMAGE GENERATION USING GEN AI</div>
+            <div class="project-duration">Jan 2025 - Apr 2025</div>
+            <div class="project-languages">
+              <i class="fab fa-python" title="Python"></i>
+            </div>
+            <div class="project-description">
+              ● Created a GenAI-powered document enhancer with ICF, RCF, and SCRM algorithms.<br />
+              ● Automatically generated images aligned with paragraph contexts.<br />
+              ● Integrated images into documents to boost readability and engagement.
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-title">CUSTOMER SEGMENTATION ANALYSIS USING RFM FOR ONLINE RETAIL BUSINESS</div>
+            <div class="project-duration">Jan 2025 - Apr 2025</div>
+            <div class="project-languages">
+              <i class="fab fa-python" title="Python"></i>
+            </div>
+            <div class="project-description">
+              ● Applied RFM segmentation on online retail datasets.<br />
+              ● Identified high-value and at-risk customers for marketing optimization.<br />
+              ● Provided insights to increase customer retention and lifetime value.
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-title">E - LEARNING MANAGEMENT SYSTEM</div>
+            <div class="project-duration">Jul 2024 - Nov 2024</div>
+            <div class="project-languages">
+              <i class="fab fa-java" title="Java"></i> <i class="fas fa-database" title="MySQL"></i>
+            </div>
+            <div class="project-description">
+              ● Developed a full-stack LMS platform for course enrollment and management.<br />
+              ● Enabled secure logins, assignment submissions, and instructor tools.<br />
+              ● Integrated certificate generation and admin moderation modules.
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-title">ENHANCED STABILIZATION AND EFFICIENT DATA ACQUISITION FOR LONG ENDURANCE UAV MISSIONS</div>
+            <div class="project-duration">Jan 2024 - Apr 2024</div>
+            <div class="project-languages">
+              <i class="fab fa-microsoft" title="MatLab"></i>
+            </div>
+            <div class="project-description">
+              ● Designed and implemented PID and MPC stabilization for UAV flight.<br />
+              ● Integrated sensor modules for smooth navigation and accurate data capture.
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-title">EVENT MANAGEMENT PLATFORM</div>
+            <div class="project-duration">Apr 2023 - Jul 2023</div>
+            <div class="project-languages">
+              <i class="fab fa-html5" title="HTML"></i>
+              <i class="fab fa-css3-alt" title="CSS"></i>
+              <i class="fab fa-js" title="JavaScript"></i>
+              <i class="fas fa-database" title="MySQL"></i>
+              <i class="fab fa-php" title="PHP"></i>
+            </div>
+            <div class="project-description">
+              ● Built a dynamic web platform to select, book, and manage event packages.<br />
+              ● Automated customer data collection and admin alerts.
+            </div>
+          </div>
+        </div>
+
+        <!-- Technical Skills Section -->
+        <h2 id="technical-skills" style="color:#28a1fd; margin-top: 50px; margin-bottom: 20px; text-align: center;">
+          Technical Skills
+        </h2>
+        <div class="skills-section">
+          <div class="skills-row">
+            <div class="skills-title"><i class="fas fa-code"></i> Languages:</div>
+            <div class="skills-category">
+              <span>Java</span>
+              <span>Python (Basic)</span>
+              <span>C</span>
+              <span>C++ (Basic)</span>
+              <span>SQL</span>
+              <span>Shell Script (Basic)</span>
+              <span>PHP (Basic)</span>
+            </div>
+          </div>
+          <div class="webtech-section">
+            <div class="webtech-title">
+              <i class="fab fa-html5"></i>
+              Web Technologies :
+            </div>
+            <div class="webtech-row">
+              <span class="webtech-box">HTML</span>
+              <span class="webtech-box">CSS</span>
+              <span class="webtech-box">JavaScript (Basic)</span>
+            </div>
+          </div>
+          <div class="skills-row">
+            <div class="skills-title"><i class="fas fa-tools"></i> Tools / Platforms :</div>
+            <div class="skills-category">
+              <span>MYSQL</span>
+              <span>GitHub</span>
+              <span>LaTeX</span>
+              <span>Wordpress</span>
+              <span>Canva</span>
+              <span>PowerBI</span>
+              <span>Unity</span>
+              <span>MATLAB</span>
+              <span>AWS</span>
+              <span>Draw.io</span>
+              <span>Star UML</span>
+              <span>Visual Paradigm</span>
+              <span>OpenGL</span>
+            </div>
+          </div>
+          <div class="skills-row">
+            <div class="skills-title"><i class="fas fa-book"></i> Core Subjects:</div>
+            <div class="skills-category">
+              <span>Data Structures & Algorithms</span>
+              <span>OOPS</span>
+              <span>DBMS</span>
+              <span>Computer Networks</span>
+              <span>Operating Systems</span>
+              <span>Software Engineering</span>
+              <span>Machine Learning</span>
+            </div>
+          </div>
+          <div class="skills-row">
+            <div class="skills-title"><i class="fas fa-users"></i> Soft Skills :</div>
+            <div class="skills-category">
+              <span>Problem Solving</span>
+              <span>Communication</span>
+              <span>Teamwork</span>
+              <span>Time Management</span>
+              <span>Creativity</span>
+              <span>Critical Thinking</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Certifications Section -->
+        <h2 id="certifications" style="color:#28a1fd; margin-top: 50px; margin-bottom: 20px; text-align: center;">
+          Certifications
+        </h2>
+        <div class="certifications-section">
+          <ul class="certificates-list">
+            <li>Cambridge English - Upskill (Naan Mudhalvan) [Jul 2022 - Nov 2022]</li>
+            <li>AWS Academy Cloud Foundations - AWS Academy (Naan Mudhalvan) [Jul 2024 - Nov 2024]</li>
+          </ul>
+        </div>
+
+        <!-- Involvements Section -->
+        <h2 id="involvements" style="color:#28a1fd; margin-top: 50px; margin-bottom: 20px; text-align: center;">
+          Involvements / Achievements
+        </h2>
+        <div class="involvements-section">
+          <ul class="involvements-list">
+            <li>2nd Place, Essay Writing - "Integrity: A Way of Life" (2019).</li>
+            <li>Student Volunteer, National Sports Organisation (2022 – Present).</li>
+            <li>Designed posters and coordinated events - Dept. of Computer Technology, MIT.</li>
+            <li>Team Member - Social Media & Marketing, AUSEC MIT.</li>
+            <li>Event Volunteer - Innovate24.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-img">
+      <img
+        src="profile.jpg"
+        alt="Profile"
+      />
+    </div>
+  </div>
+
+  <!-- Contact Details Section Centered on Page -->
+  <div class="contact-wrapper" id="contact-me">
+    <div class="contact-section">
+      <h2>Contact Me</h2>
+      <ul>
+        <li><i class="fas fa-phone"></i>Contact Number: +91 9176073305</li>
+        <li>
+          <i class="fab fa-linkedin"></i> Linkedin:&nbsp;
+          <a href="https://www.linkedin.com/in/priya-dharshini-c-182a402b4/" target="_blank" rel="noopener noreferrer">Priya Dharshini. C</a>
+        </li>
+        <li>
+          <i class="fab fa-github"></i>GitHub:&nbsp;
+          <a href="https://github.com/Priyadharshini004-mit?tab=repositories" target="_blank" rel="noopener noreferrer">Priyadharshini004-mit</a>
+        </li>
+        <li>
+          <i class="fas fa-envelope"></i>Personal Email ID:&nbsp; <a href="mailto:cpriyadharshini004@gmail.com">cpriyadharshini004@gmail.com</a>
+        </li>
+        <li>
+          <i class="fas fa-envelope"></i>College Email ID:&nbsp; <a href="mailto:2022503501@student.annauniv.edu">2022503501@student.annauniv.edu</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    // Typed effect
+    const typedRoles = [" Software Engineer", "Java Developer", "Frontend Developer"];
+    let currentRole = 0,
+      currentChar = 0,
+      isDeleting = false;
+    const typedSpan = document.getElementById("typed");
+    function typeLoop() {
+      let fullText = typedRoles[currentRole];
+      let displayed = isDeleting ? fullText.substring(0, currentChar--) : fullText.substring(0, currentChar++);
+      typedSpan.textContent = displayed;
+
+      if (!isDeleting && currentChar === fullText.length + 1) {
+        setTimeout(() => (isDeleting = true), 900);
+      } else if (isDeleting && currentChar === 0) {
+        isDeleting = false;
+        currentRole = (currentRole + 1) % typedRoles.length;
+      }
+      setTimeout(typeLoop, isDeleting ? 32 : 92);
+    }
+    typeLoop();
+  </script>
+  <script>
+  // Your Firebase config
+  const firebaseConfig = {
+    apiKey: "AIzaSyD7jiFqa_RMNUE268bHtuO2do1nhLamCdg",
+    authDomain: "priya-s-portfolio.firebaseapp.com",
+    projectId: "priya-s-portfolio",
+    storageBucket: "priya-s-portfolio.firebasestorage.app",
+    messagingSenderId: "653707411997",
+    appId: "1:653707411997:web:15c1d35ec7d8a49562fcf4",
+    measurementId: "G-NNPZ4RPHLB"
+  };
+
+  // Initialize Firebase
+  const app = firebase.initializeApp(firebaseConfig);
+
+  // Initialize Analytics
+  const analytics = firebase.analytics();
+</script>
+
+</body>
+</html>
